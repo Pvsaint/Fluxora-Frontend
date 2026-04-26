@@ -447,6 +447,24 @@ button:has(+ button[aria-label*="Connect"]):hover,
   100% { background-position: -200% 0; }
 }
 
+/* ═══════════════════════════════════════════════════════════
+   REDUCED MOTION
+   Disable all CSS animations, transitions, and the shimmer /
+   spin keyframe animations for users who prefer reduced motion.
+   JS-driven animations (e.g. GlowingDot glow) are handled in
+   the component via the matchMedia API.
+   ═══════════════════════════════════════════════════════════ */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Screen-reader only utility */
 .sr-only {
   position: absolute;
