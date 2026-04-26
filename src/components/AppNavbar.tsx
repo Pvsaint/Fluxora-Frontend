@@ -215,7 +215,7 @@ function WalletDropdown({ address, onDisconnect }: WalletDropdownProps) {
             View in explorer
           </button>
           <div style={styles.dropdownDivider} role="separator" />
-          <button role="menuitem" onClick={handleDisconnect} style={{ ...styles.dropdownItem, color: "#f87171" }}
+          <button role="menuitem" onClick={handleDisconnect} style={{ ...styles.dropdownItem, color: "var(--status-error)" }}
             onMouseEnter={(e) => (e.currentTarget.style.background = "var(--surface)")}
             onMouseLeave={(e) => (e.currentTarget.style.background = "transparent")}>
             <DisconnectIcon />
@@ -270,7 +270,7 @@ export default function AppNavbar({
           <WalletDropdown address={walletAddress} onDisconnect={onDisconnect} />
         ) : (
           <span style={styles.noWallet} aria-label="No wallet connected">
-            <span style={{ ...styles.connectedDot, background: "#6b7a94" }} />
+            <span style={{ ...styles.connectedDot, background: "var(--text-muted)" }} />
             Not connected
           </span>
         )}
@@ -304,7 +304,7 @@ const styles: Record<string, React.CSSProperties> = {
   iconButton: { background: "transparent", border: "1px solid var(--navbar-icon-border)", borderRadius: "50%", width: "40px", height: "40px", minWidth: "44px", minHeight: "44px", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", color: "var(--navbar-icon-color)", transition: "background 0.2s ease", padding: 0, outline: "none" },
   networkBadge: { display: "inline-flex", alignItems: "center", padding: "0 12px", height: "32px", minHeight: "44px", borderRadius: "20px", border: "none", fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontWeight: 600, fontSize: "0.7rem", letterSpacing: "0.07em", cursor: "pointer", whiteSpace: "nowrap", transition: "opacity 0.15s", outline: "none" },
   walletPill: { display: "inline-flex", alignItems: "center", gap: "6px", padding: "0 12px", height: "36px", minHeight: "44px", borderRadius: "20px", border: "none", background: "var(--surface)", color: "var(--text)", fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: "0.82rem", fontWeight: 500, cursor: "pointer", whiteSpace: "nowrap", outline: "none", transition: "background 0.15s" },
-  connectedDot: { width: "8px", height: "8px", borderRadius: "50%", background: "#22c55e", flexShrink: 0, boxShadow: "0 0 0 2px rgba(34,197,94,0.25)" },
+  connectedDot: { width: "8px", height: "8px", borderRadius: "50%", background: "var(--status-success)", flexShrink: 0, boxShadow: "0 0 0 2px rgba(30, 201, 142, 0.25)" },
   walletAddress: { fontFamily: "monospace", fontSize: "0.8rem" },
   noWallet: { display: "inline-flex", alignItems: "center", gap: "6px", padding: "0 12px", height: "36px", borderRadius: "20px", background: "var(--surface)", color: "var(--muted)", fontFamily: "'Plus Jakarta Sans', system-ui, sans-serif", fontSize: "0.82rem", whiteSpace: "nowrap" },
   dropdown: { position: "absolute", right: 0, top: "calc(100% + 8px)", minWidth: "185px", background: "var(--navbar-bg)", border: "1px solid var(--navbar-border)", borderRadius: "10px", boxShadow: "var(--navbar-shadow)", padding: "5px", zIndex: 200 },
