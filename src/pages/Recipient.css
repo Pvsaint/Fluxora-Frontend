@@ -7,13 +7,13 @@
   font-size: clamp(1.8rem, 2.2vw, 2.15rem);
   font-weight: 700;
   letter-spacing: -0.02em;
-  color: #f5f8ff;
+  color: var(--recipient-title-text);
 }
 
 .recipient-table-wrap {
   width: 100%;
   overflow-x: auto;
-  border: 1px solid #29364b;
+  border: 1px solid var(--recipient-border);
   border-radius: 14px;
   background:
     linear-gradient(100deg, #111a2c 0%, #131f33 36%, #131a2c 100%),
@@ -42,12 +42,12 @@
   letter-spacing: 0.07em;
   font-weight: 500;
   text-align: left;
-  color: #9aabc9;
+  color: var(--recipient-header-text);
   white-space: nowrap;
 }
 
 .recipient-streams-table td {
-  color: #eef3ff;
+  color: var(--recipient-body-text);
   vertical-align: middle;
 }
 

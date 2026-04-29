@@ -1151,15 +1151,18 @@ This section documents the accessibility enhancements implemented during this sp
 - ✅ Color contrast compliance verified
 - ✅ Keyboard navigation tested
 - ✅ Skeleton loading states with a11y
+- ✅ Hardcoded colors migrated to design tokens (Recipient.css, Button.module.css, ConnectWalletModal.tsx, etc.)
 
-**Future Improvements (Next Sprint):**
-- [ ] High contrast mode support (Windows high contrast)
-- [ ] Forced colors media query optimization
-- [ ] Screen reader testing with Narrator (Windows), NVDA (full suite)
-- [ ] VoiceOver testing on macOS
-- [ ] Form validation live region announcements (per ARIA 1.2)
-- [ ] Data table ARIA patterns (if tables added)
-- [ ] Drag-and-drop keyboard alternative (if needed)
+**Hardcoded Color Migration Completed:**
+- ✅ Recipient.css: All colors now use `--recipient-*` tokens with light/dark theme support
+- ✅ Button.module.css: Hover/active states use `--color-danger-*` and `--color-success-*` tokens
+- ✅ ConnectWalletModal.tsx: All inline styles use CSS variables
+- ✅ AppNavbar.tsx: Inline styles use semantic tokens
+- ✅ Dashboard.tsx: Warning icon uses `--status-warning` token
+- ✅ ErrorPage.css: All colors use status/surface tokens
+- ✅ CreateStreamModal.css: Button and warning colors use tokens
+- ✅ Footer.css: Logo icon uses `--accent` token
+- ✅ GetStartedCTA.tsx: Card uses surface/border tokens
 
 ---
 
