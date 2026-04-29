@@ -11,6 +11,7 @@ import ConnectWallet from "./pages/ConnectWallet";
 import Landing from "./pages/Landing";
 import ErrorPage from "./pages/ErrorPage";
 import NotFound from "./pages/NotFound";
+import TreasuryPage from "./pages/TreasuryPage";
 
 function LegacyStreamRedirect() {
   const { streamId } = useParams();
@@ -64,10 +65,7 @@ export default function App() {
           <Route
             path="/app"
             element={
-              <Layout 
-                isSidebarOpen={isSidebarOpen}
-                onSidebarClose={() => setIsSidebarOpen(false)}
-              />
+              <Layout />
             }
           >
             <Route index element={<Dashboard />} />

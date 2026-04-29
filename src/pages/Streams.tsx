@@ -7,6 +7,7 @@ import ToastNotification, {
   type ToastVariant,
 } from "../components/ToastNotification";
 import StreamsLoading from "../components/StreamsLoading";
+import ZeroAccrualBanner from "../components/ZeroAccrualBanner";
 import {
   getStreamRecord,
   streamRecords,
@@ -539,6 +540,13 @@ export default function Streams() {
   const selectedStream = streamId ? getStreamRecord(streamId) : undefined;
   const hasStreams = streamRecords.length > 0;
   const showEmptyState = !selectedStream && (!walletConnected || !hasStreams);
+  // Zero-accrual: connected + streams exist + nothing is withdrawable yet
+  const showZeroAccrual =
+    !showEmptyState &&
+    walletConnected &&
+    hasStreams &&
+    withdrawableNow === 0 &&
+    activeStreams.length > 0;
   const effectiveExpandedId = visibleStreams.some(
     (stream) => stream.id === expandedStreamId,
   )
@@ -658,6 +666,21 @@ export default function Streams() {
               </button>
             </div>
           </section>
+
+          {/* Zero-accrual banner — streams live but nothing withdrawable yet */}
+          {showZeroAccrual && (
+            <ZeroAccrualBanner
+              reason="cliff"
+              nextEventDate={nextUnlock}
+              onAction={() => {
+                const first = streamRecords.find(
+                  (s) => s.status === "Active",
+                );
+                if (first) navigate(`/app/streams/${first.id}`);
+              }}
+              actionLabel="Check cliff date"
+            />
+          )}
 
           <section className="streams-summary-grid" aria-label="Stream summary">
             <div className="streams-summary-card">

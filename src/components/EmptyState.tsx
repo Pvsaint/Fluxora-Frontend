@@ -2,7 +2,7 @@ import React from "react";
 
 // ── Types ─────────────────────────────────────────────────────────────────────
 
-export type EmptyStateVariant = "treasury" | "streams" | "recipient";
+export type EmptyStateVariant = "treasury" | "streams" | "recipient" | "zero-accrual";
 
 export interface EmptyStateProps {
   variant: EmptyStateVariant;
@@ -14,6 +14,11 @@ export interface EmptyStateProps {
   error?: string | null;
   onRetry?: () => void;
   onPrimaryAction?: () => void;
+  /**
+   * Zero-accrual context: streams exist but balance = 0.
+   * Drives distinct icon and copy vs true empty state.
+   */
+  zeroAccrual?: boolean;
 }
 
 // ── Per-variant copy & icon config ───────────────────────────────────────────
@@ -88,19 +93,43 @@ const CONFIG: Record<
       </svg>
     ),
   },
+  "zero-accrual": {
+    connectedTitle: "Streams active — accrual pending",
+    connectedDescription:
+      "Your streams are live but haven't produced a withdrawable balance yet. This is normal during cliff periods or when streams started recently.",
+    connectedCta: "View stream details",
+    anonymousTitle: "Connect your wallet",
+    anonymousDescription:
+      "Connect a Stellar wallet to view incoming streams and withdraw accrued USDC.",
+    anonymousCta: "Connect wallet",
+    regionLabel: "Zero accrual state",
+    icon: (
+      <svg width="32" height="32" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <path d="M5 2h14M5 22h14M6 2v5l6 5-6 5v5M18 2v5l-6 5 6 5v5"
+          stroke="#f59e0b" strokeWidth="1.75" strokeLinecap="round" strokeLinejoin="round" />
+      </svg>
+    ),
+  },
 };
 
 // ── Loading skeleton ──────────────────────────────────────────────────────────
 
 function LoadingSkeleton() {
   return (
-    <div role="status" aria-label="Loading" style={skeletonWrap}>
-      <div style={{ ...skeletonBox, width: 72, height: 72, borderRadius: 20, marginBottom: 24 }} />
-      <div style={{ ...skeletonBox, width: 160, height: 20, borderRadius: 6, marginBottom: 12 }} />
-      <div style={{ ...skeletonBox, width: 280, height: 14, borderRadius: 6, marginBottom: 8 }} />
-      <div style={{ ...skeletonBox, width: 220, height: 14, borderRadius: 6, marginBottom: 28 }} />
-      <div style={{ ...skeletonBox, width: 140, height: 44, borderRadius: 8 }} />
-      <span className="sr-only">Loading content…</span>
+    <div
+      role="status"
+      aria-live="polite"
+      aria-busy="true"
+      aria-label="Loading content"
+      style={skeletonWrap}
+    >
+      {/* Announced to screen readers immediately */}
+      <span className="sr-only">Loading content, please wait…</span>
+      <div aria-hidden="true" style={{ ...skeletonBox, width: 72, height: 72, borderRadius: 20, marginBottom: 24 }} />
+      <div aria-hidden="true" style={{ ...skeletonBox, width: 160, height: 20, borderRadius: 6, marginBottom: 12 }} />
+      <div aria-hidden="true" style={{ ...skeletonBox, width: 280, height: 14, borderRadius: 6, marginBottom: 8 }} />
+      <div aria-hidden="true" style={{ ...skeletonBox, width: 220, height: 14, borderRadius: 6, marginBottom: 28 }} />
+      <div aria-hidden="true" style={{ ...skeletonBox, width: 140, height: 44, borderRadius: 8 }} />
     </div>
   );
 }
@@ -114,8 +143,13 @@ export default function EmptyState({
   error = null,
   onRetry,
   onPrimaryAction,
+  zeroAccrual = false,
 }: EmptyStateProps) {
-  const cfg = CONFIG[variant];
+  // When zero-accrual is flagged and variant is not already zero-accrual,
+  // override the icon+copy to zero-accrual semantics.
+  const effectiveVariant: EmptyStateVariant =
+    zeroAccrual && variant !== "zero-accrual" ? "zero-accrual" : variant;
+  const cfg = CONFIG[effectiveVariant];
   const isConnected = walletConnected;
 
   if (loading) return <LoadingSkeleton />;
@@ -135,9 +169,9 @@ export default function EmptyState({
         {/* Heading — announced by screen readers when region updates */}
         <h2 style={titleStyle}>{title}</h2>
 
-        {/* Error banner */}
+        {/* Error banner — assertive so AT announces immediately */}
         {error && (
-          <div role="alert" aria-live="assertive" style={errorBanner}>
+          <div role="alert" aria-live="assertive" aria-atomic="true" style={errorBanner}>
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style={{ flexShrink: 0 }}>
               <circle cx="8" cy="8" r="7" stroke="#FF4D4F" strokeWidth="1.5" />
               <path d="M8 5v3.5M8 10.5v.5" stroke="#FF4D4F" strokeWidth="1.5" strokeLinecap="round" />
@@ -214,11 +248,13 @@ function iconBox(variant: EmptyStateVariant): React.CSSProperties {
     treasury: "rgba(0,212,170,0.08)",
     streams: "rgba(94,211,243,0.08)",
     recipient: "rgba(106,114,130,0.08)",
+    "zero-accrual": "rgba(245,158,11,0.08)",
   };
   const borders: Record<EmptyStateVariant, string> = {
     treasury: "rgba(0,212,170,0.18)",
     streams: "rgba(94,211,243,0.15)",
     recipient: "rgba(106,114,130,0.18)",
+    "zero-accrual": "rgba(245,158,11,0.22)",
   };
   return {
     width: 72,
@@ -257,9 +293,8 @@ function ctaStyle(variant: EmptyStateVariant, connected: boolean): React.CSSProp
     streams: connected
       ? "linear-gradient(135deg, #2DD4BF 0%, #0EA5A0 100%)"
       : "rgba(255,255,255,0.06)",
-    recipient: connected
-      ? "rgba(255,255,255,0.06)"
-      : "rgba(255,255,255,0.06)",
+    recipient: "rgba(255,255,255,0.06)",
+    "zero-accrual": "rgba(245,158,11,0.12)",
   };
   return {
     display: "inline-flex",
