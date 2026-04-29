@@ -125,7 +125,7 @@ export default function Dashboard() {
       {!walletConnected && !showOnboarding && (
         <div style={walletBannerStyle} role="alert" aria-live="polite">
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem' }}>
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true" style={{ color: '#f59e0b', flexShrink: 0 }}>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth={2} aria-hidden="true" style={{ color: 'var(--status-warning)', flexShrink: 0 }}>
               <path strokeLinecap="round" strokeLinejoin="round" d="M12 9v2m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <span style={{ fontSize: '0.875rem', color: 'var(--text)' }}>

@@ -76,6 +76,18 @@
   --color-accent-secondary-dark: #00a884;
   --color-accent-primary-darkest: #006f7a;
 
+  /* ─── Status Hover/Active Variants ─── */
+  --color-danger-hover: #dc2626;
+  --color-danger-active: #bb2124;
+  --color-success-hover: #059669;
+  --color-success-active: #047857;
+
+  /* ─── Recipient Page ─── */
+  --recipient-title-text: #f5f8ff;
+  --recipient-border: #29364b;
+  --recipient-header-text: #9aabc9;
+  --recipient-body-text: #eef3ff;
+
   /* ─── Semantic CTA Tokens ─── */
   --color-cta-primary-bg: var(--color-accent-primary);
   --color-cta-primary-bg-hover: var(--color-accent-primary-dark);
@@ -107,6 +119,12 @@
   /* Network */
   --network-testnet-bg: #fef3c7;
   --network-testnet-text: #92400e;
+
+  /* Recipient Page */
+  --recipient-title-text: #f5f8ff;
+  --recipient-border: #29364b;
+  --recipient-header-text: #9aabc9;
+  --recipient-body-text: #eef3ff;
 }
 
 /* ═══════════════════════════════════════════════════════════
@@ -182,6 +200,12 @@
   /* Network */
   --network-testnet-bg: rgba(250, 224, 141, 0.15);
   --network-testnet-text: #fbd96a;
+
+  /* Recipient Page */
+  --recipient-title-text: var(--text-vivid);
+  --recipient-border: var(--border-neutral);
+  --recipient-header-text: var(--text-muted);
+  --recipient-body-text: var(--text-secondary);
 }
 
 /* ═══════════════════════════════════════════════════════════

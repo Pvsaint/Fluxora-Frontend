@@ -127,7 +127,7 @@ export default function ConnectWalletModal({
           style={{
             ...styles.closeButton,
             boxShadow: isCloseFocused
-              ? "0 0 0 2px #0c1628, 0 0 0 4px #0ea5e9"
+              ? "0 0 0 2px var(--surface-base), 0 0 0 4px var(--interactive-focus-ring)"
               : "none",
           }}
           onClick={onClose}
@@ -160,10 +160,10 @@ export default function ConnectWalletModal({
                 type="button"
                 style={{
                   ...styles.walletOption,
-                  background: isActive ? "#18314a" : "#121a2a",
-                  borderColor: isActive ? "#3b85b5" : "#1e2d42",
+                  background: isActive ? "var(--surface-elevated)" : "var(--surface-neutral)",
+                  borderColor: isActive ? "var(--border-interactive)" : "var(--border-neutral)",
                   boxShadow: isActive
-                    ? "0 0 0 2px #0c1628, 0 0 0 4px #0ea5e9"
+                    ? "0 0 0 2px var(--surface-base), 0 0 0 4px var(--interactive-focus-ring)"
                     : "none",
                 }}
                 onClick={wallet.action}
@@ -217,13 +217,13 @@ const styles: Record<string, CSSProperties> = {
   },
   modal: {
     position: "relative",
-    background: "linear-gradient(180deg, #0f1828 0%, #0a0e17 100%)",
+    background: "var(--surface-neutral)",
     borderRadius: 16,
     padding: "clamp(18px, 5vw, 30px)",
     maxWidth: 520,
     width: "100%",
     boxShadow: "0 24px 60px rgba(0, 0, 0, 0.45)",
-    border: "1px solid #23405a",
+    border: "1px solid var(--border-neutral)",
     maxHeight: "90vh",
     overflowY: "auto",
     fontFamily: '"Plus Jakarta Sans", Inter, system-ui, sans-serif',
@@ -234,7 +234,7 @@ const styles: Record<string, CSSProperties> = {
     right: "1rem",
     background: "transparent",
     border: "1px solid transparent",
-    color: "#b6c8dd",
+    color: "var(--text-muted)",
     fontSize: "1.125rem",
     cursor: "pointer",
     borderRadius: 8,
@@ -250,7 +250,7 @@ const styles: Record<string, CSSProperties> = {
     display: "inline-block",
     borderRadius: 999,
     border: "1px solid rgba(34, 211, 238, 0.35)",
-    color: "#a6eaf7",
+    color: "var(--status-info)",
     background: "rgba(34, 211, 238, 0.12)",
     padding: "5px 9px",
     fontSize: "0.75rem",
@@ -263,7 +263,7 @@ const styles: Record<string, CSSProperties> = {
     margin: 0,
     fontSize: "clamp(1.25rem, 4vw, 1.7rem)",
     fontWeight: 700,
-    color: "#ffffff",
+    color: "var(--text-vivid)",
     marginBottom: "0.5rem",
     lineHeight: 1.25,
     letterSpacing: "-0.01em",
@@ -271,7 +271,7 @@ const styles: Record<string, CSSProperties> = {
   subtitle: {
     margin: 0,
     fontSize: "clamp(0.86rem, 2.8vw, 0.95rem)",
-    color: "#b4c2d8",
+    color: "var(--text-secondary)",
     lineHeight: 1.55,
     maxWidth: 420,
   },
@@ -285,7 +285,7 @@ const styles: Record<string, CSSProperties> = {
     display: "flex",
     alignItems: "center",
     gap: "clamp(0.75rem, 3vw, 1rem)",
-    border: "1px solid #1e2d42",
+    border: "1px solid var(--border-neutral)",
     borderRadius: 12,
     padding: "clamp(0.75rem, 3vw, 1rem)",
     cursor: "pointer",
@@ -300,7 +300,7 @@ const styles: Record<string, CSSProperties> = {
     width: "clamp(38px, 11vw, 48px)",
     height: "clamp(38px, 11vw, 48px)",
     borderRadius: 10,
-    background: "rgba(20, 38, 61, 0.72)",
+    background: "var(--surface-elevated)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -311,28 +311,28 @@ const styles: Record<string, CSSProperties> = {
   walletName: {
     fontSize: "clamp(0.92rem, 2.5vw, 1rem)",
     fontWeight: 700,
-    color: "#ffffff",
+    color: "var(--text-vivid)",
     marginBottom: "0.25rem",
   },
   walletDescription: {
     fontSize: "clamp(0.76rem, 2vw, 0.875rem)",
-    color: "#b4c2d8",
+    color: "var(--text-secondary)",
     lineHeight: 1.4,
   },
   chevron: {
     fontSize: "1.1rem",
-    color: "#8cb2d4",
+    color: "var(--text-muted)",
     flexShrink: 0,
   },
   footer: {
     fontSize: "0.8rem",
-    color: "#9fb5ce",
+    color: "var(--text-muted)",
     lineHeight: 1.5,
     textAlign: "center",
     margin: 0,
   },
   termsLink: {
-    color: "#00d4aa",
+    color: "var(--status-info)",
     textDecoration: "underline",
     textUnderlineOffset: "2px",
   },

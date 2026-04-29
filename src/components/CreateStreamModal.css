@@ -95,21 +95,21 @@
 
 /* Active step: teal circle with white number for contrast */
 .step-item.active .step-circle {
-  color: #ffffff;
+  color: var(--color-text-inverse);
   font-weight: 700;
 }
 
 /* Cancel: dark charcoal, white text */
 .btn-cancel {
-  background: #1a1d26;
-  color: #ffffff;
+  background: var(--surface-elevated);
+  color: var(--text-vivid);
   border: none;
 }
 
 /* Next: teal gradient to match progress accent */
 .btn-next {
-  background: linear-gradient(135deg, #00b8d4, #0097a7);
-  color: #ffffff;
+  background: var(--color-cta-primary-bg);
+  color: var(--color-text-inverse);
   border: none;
 }
 .modal-header {
@@ -419,7 +419,7 @@
 .toggle-knob {
   width: 14px;
   height: 14px;
-  background: #ffffff;
+  background: var(--surface-base);
   border-radius: 50%;
   position: absolute;
   top: 3px;
@@ -746,14 +746,14 @@
 .review-warning-box {
   padding: 0.625rem 0.875rem;
   border-radius: 8px;
-  background: rgba(123, 51, 6, 0.2);
-  color: #ffd230;
+  background: var(--color-warning-bg);
+  color: var(--status-warning);
   font-size: 0.8125rem;
   line-height: 1.45;
 }
 
 .review-warning-box strong {
-  color: #ffd230;
+  color: var(--status-warning);
   font-weight: 600;
 }
 
