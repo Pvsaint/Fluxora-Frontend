@@ -1,6 +1,6 @@
 import "./ToastNotification.css";
 
-export type ToastVariant = "success" | "error";
+export type ToastVariant = "success" | "error" | "info" | "warning";
 
 interface ToastNotificationProps {
   message: string;
@@ -9,14 +9,10 @@ interface ToastNotificationProps {
 }
 
 const TOAST_COPY: Record<ToastVariant, { label: string; icon: string }> = {
-  success: {
-    label: "Success",
-    icon: "✓",
-  },
-  error: {
-    label: "Error",
-    icon: "!",
-  },
+  success: { label: "Success", icon: "✓" },
+  error: { label: "Error", icon: "!" },
+  info: { label: "Info", icon: "i" },
+  warning: { label: "Warning", icon: "⚠" },
 };
 
 export default function ToastNotification({
@@ -25,15 +21,9 @@ export default function ToastNotification({
   onClose,
 }: ToastNotificationProps) {
   const semantics =
-    variant === "error"
-      ? {
-          role: "alert" as const,
-          "aria-live": "assertive" as const,
-        }
-      : {
-          role: "status" as const,
-          "aria-live": "polite" as const,
-        };
+    variant === "error" || variant === "warning"
+      ? { role: "alert" as const, "aria-live": "assertive" as const }
+      : { role: "status" as const, "aria-live": "polite" as const };
 
   const { label, icon } = TOAST_COPY[variant];
 

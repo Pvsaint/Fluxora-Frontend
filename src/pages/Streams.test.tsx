@@ -3,6 +3,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { MemoryRouter, Route, Routes } from "react-router-dom";
 import Streams from "./Streams";
 import { streamRecords } from "../data/streamRecords";
+import { ToastProvider } from "../components/toast/ToastProvider";
 
 type MatchMediaChangeHandler = (event: MediaQueryListEvent) => void;
 
@@ -39,11 +40,13 @@ function mockMatchMedia(matches: boolean) {
 
 function renderStreams() {
   return render(
-    <MemoryRouter initialEntries={["/app/streams"]}>
-      <Routes>
-        <Route path="/app/streams" element={<Streams />} />
-      </Routes>
-    </MemoryRouter>,
+    <ToastProvider>
+      <MemoryRouter initialEntries={["/app/streams"]}>
+        <Routes>
+          <Route path="/app/streams" element={<Streams />} />
+        </Routes>
+      </MemoryRouter>
+    </ToastProvider>,
   );
 }
 

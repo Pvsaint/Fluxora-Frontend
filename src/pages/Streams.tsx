@@ -10,9 +10,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import CreateStreamModal from "../components/CreateStreamModal";
 import EmptyState from "../components/EmptyState";
 import StreamCreatedModal from "../components/Streams/StreamCreatedModal";
-import ToastNotification, {
-  type ToastVariant,
-} from "../components/ToastNotification";
+import { useToast } from "../components/toast/ToastProvider";
 import StreamsLoading from "../components/StreamsLoading";
 import Input from "../components/Input";
 import ZeroAccrualBanner from "../components/ZeroAccrualBanner";
@@ -696,6 +694,7 @@ export default function Streams() {
   const navigate = useNavigate();
   const { streamId } = useParams();
   const { announcement, announce } = useLiveAnnouncer();
+  const { addToast } = useToast();
 
   const [loading, setLoading] = useState(true);
   const [statusFilter, setStatusFilter] = useState<StatusFilter>("All");
@@ -711,10 +710,6 @@ export default function Streams() {
     id: "STR-NEW",
     url: "https://fluxora.io/stream/STR-NEW",
   });
-  const [toast, setToast] = useState<{
-    message: string;
-    variant: ToastVariant;
-  } | null>(null);
 
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
@@ -726,13 +721,6 @@ export default function Streams() {
     const timer = window.setTimeout(() => setLoading(false), 2000);
     return () => window.clearTimeout(timer);
   }, []);
-
-  useEffect(() => {
-    if (!toast) return undefined;
-
-    const timer = window.setTimeout(() => setToast(null), 4000);
-    return () => window.clearTimeout(timer);
-  }, [toast]);
 
   if (loading) return <StreamsLoading />;
 
@@ -798,16 +786,15 @@ export default function Streams() {
   const handleCopyRecipient = async (stream: StreamRecord) => {
     try {
       await navigator.clipboard.writeText(stream.recipientAddress);
-      setToast({
-        message: `Recipient for ${stream.name} copied to your clipboard.`,
-        variant: "success",
-      });
+      addToast(
+        `Recipient for ${stream.name} copied to your clipboard.`,
+        "success",
+      );
     } catch {
-      setToast({
-        message:
-          "Clipboard access is unavailable in this browser. Copy the address manually instead.",
-        variant: "error",
-      });
+      addToast(
+        "Clipboard access is unavailable in this browser. Copy the address manually instead.",
+        "error",
+      );
     }
   };
 
@@ -1035,14 +1022,6 @@ export default function Streams() {
             />
           </section>
         </>
-      )}
-
-      {toast && (
-        <ToastNotification
-          message={toast.message}
-          variant={toast.variant}
-          onClose={() => setToast(null)}
-        />
       )}
 
       <CreateStreamModal

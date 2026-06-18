@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import Layout from "./components/Layout";
 import AppNavbar from "./components/navigation/AppNavbar";
 import { WalletProvider } from "./components/wallet-connect/Walletcontext";
+import { ToastProvider } from "./components/toast/ToastProvider";
 import Home from "./pages/Home";
 import Dashboard from "./pages/Dashboard";
 import Streams from "./pages/Streams";
@@ -47,6 +48,7 @@ export default function App() {
   return (
     <BrowserRouter>
       <WalletProvider>
+        <ToastProvider>
         <a href="#main-content" className="skip-link">
           Skip to content
         </a>
@@ -80,6 +82,7 @@ export default function App() {
           <Route path="/connect-wallet" element={<ConnectWallet />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
+      </ToastProvider>
       </WalletProvider>
     </BrowserRouter>
   );
