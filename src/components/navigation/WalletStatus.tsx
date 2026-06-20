@@ -1,18 +1,25 @@
 import { useState, useRef, useEffect } from "react";
 import { ChevronDown, Copy, ExternalLink, LogOut, Check } from "lucide-react";
+import {
+  isStellarNetworkMismatch,
+  normalizeStellarNetwork,
+} from "../../lib/stellarNetwork";
 import { maskAddress, stellarExplorerUrl } from "../../lib/stellar";
 
 interface WalletStatusProps {
   address: string;
   network: string;
+  expectedNetwork?: string;
+  isNetworkMismatch?: boolean;
   onDisconnect?: () => void;
 }
 
-const SUPPORTED_NETWORKS = ["PUBLIC", "TESTNET"];
 
 export default function WalletStatus({
   address,
   network,
+  expectedNetwork = "TESTNET",
+  isNetworkMismatch = isStellarNetworkMismatch(network, expectedNetwork),
   onDisconnect,
 }: WalletStatusProps) {
   const [open, setOpen] = useState(false);
@@ -24,8 +31,8 @@ export default function WalletStatus({
   const focusRingClassName =
     "outline-none focus-visible:ring-2 focus-visible:ring-[var(--color-focus)] focus-visible:ring-offset-2 focus-visible:ring-offset-[var(--navbar-bg)]";
 
-  const networkUpper = network?.toUpperCase() ?? "";
-  const isWrongNetwork = !SUPPORTED_NETWORKS.includes(networkUpper);
+  const networkUpper = normalizeStellarNetwork(network);
+  const isWrongNetwork = isNetworkMismatch;
   const isTestnet = networkUpper === "TESTNET";
 
   useEffect(() => {
@@ -89,7 +96,7 @@ export default function WalletStatus({
       {isWrongNetwork ? (
         <span className="flex items-center gap-1.5 px-3 h-8 rounded-full text-xs font-semibold bg-red-500/20 text-red-400 border border-red-500/40">
           <span className="w-2 h-2 rounded-full bg-red-400" />
-          Wrong Network
+          Expected {expectedNetwork}
         </span>
       ) : (
         <span

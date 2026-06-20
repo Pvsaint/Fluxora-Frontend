@@ -12,6 +12,11 @@ import {
   getNetwork,
   WatchWalletChanges,
 } from "@stellar/freighter-api";
+import {
+  getExpectedStellarNetwork,
+  isStellarNetworkMismatch,
+  type StellarNetwork,
+} from "../../lib/stellarNetwork";
 
 interface WalletState {
   address: string | null;
@@ -20,6 +25,8 @@ interface WalletState {
 }
 
 interface WalletContextType extends WalletState {
+  expectedNetwork: StellarNetwork;
+  isNetworkMismatch: boolean;
   connect: (address: string, network: string) => void;
   disconnect: () => void;
 }
@@ -39,6 +46,10 @@ export function WalletProvider({ children }: { children: ReactNode }) {
     watcherRef.current?.stop();
     watcherRef.current = null;
   };
+
+  const expectedNetwork = getExpectedStellarNetwork();
+  const isNetworkMismatch =
+    state.connected && isStellarNetworkMismatch(state.network, expectedNetwork);
 
   const connect = (address: string, network: string) =>
     setState({ address, network, connected: true });
@@ -106,7 +117,15 @@ export function WalletProvider({ children }: { children: ReactNode }) {
   }, [state.connected]);
 
   return (
-    <WalletContext.Provider value={{ ...state, connect, disconnect }}>
+    <WalletContext.Provider
+      value={{
+        ...state,
+        expectedNetwork,
+        isNetworkMismatch,
+        connect,
+        disconnect,
+      }}
+    >
       {children}
     </WalletContext.Provider>
   );
